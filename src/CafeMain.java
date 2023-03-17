@@ -457,8 +457,12 @@ public class CafeMain extends JDialog {
 									vec.add(rs.getString(i));
 							}
 						}else {
-							for(int i=1;i<=6;i++) {
+							/*for(int i=1;i<=6;i++) {
 								if(i!=2)
+									vec.add(rs.getString(i));
+							}*/
+							for(int i=1;i<=8;i++) {
+								if(i!=6 && i!=8)
 									vec.add(rs.getString(i));
 							}
 						}
