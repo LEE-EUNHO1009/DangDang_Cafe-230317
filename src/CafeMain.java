@@ -51,7 +51,6 @@ import DogManager.DogAllShow;
 
 public class CafeMain extends JDialog {
 	private static JTable table;
-	//private static JLabel lblISBN;
 	private JTextField tfSearch;
 	private final int typeAdd = 1;
 	private final int typeRemove = 2;
@@ -351,36 +350,10 @@ public class CafeMain extends JDialog {
 		progressBar.setStringPainted(true);
 		panel.add(progressBar);
 		
-		//lblISBN = new JLabel("현재 선택한 ISBN:");
-		//panel.add(lblISBN);
 		
-		
-		//showTable();
 	}
 
-	/*protected void insertList(String sID, String sISBN) {
-		// TODO Auto-generated method stub
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con = 
-					DriverManager.getConnection("jdbc:mysql://localhost:3306/sqlDB", "root","1234");
-			
-			//=============================================		
-			String sql = "insert into listTBL values(null,'";
-			sql = sql + sID + "','" + sISBN + "', curDate())";
-			Statement stmt = con.createStatement();
-			System.out.println(sql);
-			
-			stmt.executeUpdate(sql);
-			
-			//==============================================
-			con.close();
-		} catch (ClassNotFoundException e1) {
-			System.out.println("JDBC 드라이버 로드 에러");
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		} 
-	}*/
+	
 
 	protected void showSearchResult(String sItem, String txtSearch) {
 		// TODO Auto-generated method stub
