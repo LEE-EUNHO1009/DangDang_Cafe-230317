@@ -122,6 +122,14 @@ public class Dog extends JPanel {
 		add(lblDogNotandum);
 		
 		tfDogName = new JTextField();
+		tfDogName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					showRecord(tfDogName.getText());
+				}
+			}
+		});
 		tfDogName.setColumns(10);
 		tfDogName.setBounds(242, 19, 116, 21);
 		add(tfDogName);
@@ -295,31 +303,48 @@ public class Dog extends JPanel {
 
 	}
 
-	//protected void showCoupon() {
-	//	try {
-	//		Class.forName("com.mysql.cj.jdbc.Driver");
-	//		Connection con = 
-	//				DriverManager.getConnection("jdbc:mysql://localhost:3306/sqlDB", "root","1234");			
-	//		//=============================================		
-	//		String sql = "select datediff('" + tfDogCoupon.getText() + "', now()) as CP";
-	//		Statement stmt = con.createStatement();
-	//		ResultSet rs = stmt.executeQuery(sql);
-	//		if(rs.next())
-	//			if(rs.getInt("CP")==0)
-	//				lblCouponMax.setText("생일 축하!!!");
-	//			else
-	//				lblCouponMax.setText(rs.getInt("CD")+"일 남음");
-	//		rs.close();
-	//		stmt.close();
-	//		//==============================================
-	//		con.close();
-	//	} catch (ClassNotFoundException e1) {
-	//		System.out.println("JDBC 드라이버 로드 에러");
-	//	} catch (SQLException e1) {
-	//		System.out.println("DB 연결 오류");
-	//	}
+	
+
+	protected void showRecord(String dName) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = 
+					DriverManager.getConnection("jdbc:mysql://localhost:3306/sqlDB", "root","1234");			
+			//=============================================		
+			String sql = "select * from dogTBL where name ='"+dName+"'";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if(rs.next()) {
+				tfDogGuardianName.setText(rs.getString("guardian"));
+				cbDog.setSelectedItem(rs.getString("class"));
+				tfDogWeight.setText(rs.getString("weight"));
+				tfDogBirth.setText(rs.getString("birth"));
+				tfDogCoupon.setText(rs.getString("coupon"));
+				tfDogNotandum.setText(rs.getString("notandum"));
+				
+				file = rs.getString("image");
+				ImageIcon icon = new ImageIcon(file);
+				Image image = icon.getImage();
+				image = image.getScaledInstance(150, 180, Image.SCALE_SMOOTH);
+				ImageIcon pic = new ImageIcon(image);
+				lblDogImage.setIcon(pic);
+			}
+			
+			
+			rs.close(); 
+			stmt.close();
+			//==============================================
+			con.close();
+		} catch (ClassNotFoundException e1) {
+			System.out.println("JDBC 드라이버 로드 에러");
+		} catch (SQLException e1) {
+			System.out.println("DB 연결 오류");
+		} 
 		
-	//}
+	}
+
+
 
 	protected void modifyRecord() {
 		try {
@@ -330,6 +355,7 @@ public class Dog extends JPanel {
 			String sql = "update dogTBL set guardian=?, class=?, weight=?, ";
 			sql = sql +  "birth=?, coupon=?, notandum=?, image=? where name=?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
+			
 			pstmt.setString(1, tfDogGuardianName.getText());
 			pstmt.setString(2, cbDog.getSelectedItem().toString());	
 			pstmt.setString(3, tfDogWeight.getText());
@@ -351,7 +377,7 @@ public class Dog extends JPanel {
 	}
 
 	protected boolean isModify() {
-		if(!originAttrs[0].equals(tfDogName.getText())) {
+		/*if(!originAttrs[0].equals(tfDogName.getText())) {
 			originAttrs[0] = tfDogName.getText();
 			return true;
 		}else if(!originAttrs[1].equals(tfDogGuardianName.getText())) {
@@ -375,7 +401,8 @@ public class Dog extends JPanel {
 		}else if(!originAttrs[7].equals(file))
 			return true;
 		else
-			return false;
+			return false;*/
+		return true;
 	}
 
 	protected void removeRecord() {
