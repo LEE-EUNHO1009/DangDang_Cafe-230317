@@ -321,7 +321,7 @@ public class Dog extends JPanel {
 				tfDogWeight.setText(rs.getString("weight"));
 				tfDogBirth.setText(rs.getString("birth"));
 				tfDogCoupon.setText(rs.getString("coupon"));
-				tfDogNotandum.setText(rs.getString("notandum"));
+				taDogNotandum.setText(rs.getString("notandum"));
 				
 				file = rs.getString("image");
 				ImageIcon icon = new ImageIcon(file);

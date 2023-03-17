@@ -112,7 +112,15 @@ public class Customer extends JPanel {
 		add(lblBirth);
 		
 		tfName = new JTextField();
-		tfName.addFocusListener(new FocusAdapter() {
+		tfName.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+					showRecord(tfName.getText());
+				}
+			}
+		});
+		/*tfName.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
 				try{
@@ -121,7 +129,9 @@ public class Customer extends JPanel {
                    inCtx2.setCharacterSubsets( subset2 );
                   }catch(Exception ee) { ee.printStackTrace(); }
 			}
+			
 		});
+		*/
 		tfName.setColumns(10);
 		tfName.setBounds(373, 33, 116, 21);
 		add(tfName);
@@ -296,6 +306,52 @@ public class Customer extends JPanel {
 		tfMobile2.setBounds(501, 63, 116, 21);
 		add(tfMobile2);
 	}
+	protected void showRecord(String cName) {
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = 
+					DriverManager.getConnection("jdbc:mysql://localhost:3306/sqlDB", "root","1234");			
+			//=============================================		
+			String sql = "select * from customerTBL where name ='"+cName+"'";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			
+			if(rs.next()) {
+				tfName.setText(rs.getString("name"));
+				tfMobile.setText(rs.getString("mobile"));
+				tfMobile2.setText(rs.getString("mobile2"));
+				tfAddress.setText(rs.getString("address"));
+				
+				tfBirthLunar.setText(rs.getString("birth"));
+				if(ckLunar.equals("name"))
+					ckLunar.setSelected(true);
+				else
+					ckLunar.setSelected(false);
+				
+				
+				tfCustomerCoupon.setText(rs.getString("coupon"));
+				
+				file = rs.getString("image");
+				ImageIcon icon = new ImageIcon(file);
+				Image image = icon.getImage();
+				image = image.getScaledInstance(150, 180, Image.SCALE_SMOOTH);
+				ImageIcon pic = new ImageIcon(image);
+				lblImage.setIcon(pic);
+			}
+			
+			
+			rs.close(); 
+			stmt.close();
+			//==============================================
+			con.close();
+		} catch (ClassNotFoundException e1) {
+			System.out.println("JDBC 드라이버 로드 에러");
+		} catch (SQLException e1) {
+			System.out.println("DB 연결 오류");
+		} 
+		
+		
+	}
 	protected void modifyRecord() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -328,7 +384,7 @@ public class Customer extends JPanel {
 		
 	}
 	protected boolean isModify() {
-		if(!originAttrs[0].equals(tfName.getText())) {
+		/*if(!originAttrs[0].equals(tfName.getText())) {
 			originAttrs[0] = tfName.getText();
 			return true;
 		}else if(!originAttrs[1].equals(tfMobile.getText())) {
@@ -353,7 +409,9 @@ public class Customer extends JPanel {
 			return true;
 		
 		else
-			return false;		
+			return false;
+			*/
+		return true;
 	}
 	protected void removeRecord() {
 		try {
