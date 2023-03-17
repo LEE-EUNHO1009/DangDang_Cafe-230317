@@ -358,35 +358,35 @@ public class CafeMain extends JDialog {
 		//showTable();
 	}
 
-	//protected void insertList(String sID, String sISBN) {
-	//	// TODO Auto-generated method stub
-	//	try {
-	//		Class.forName("com.mysql.cj.jdbc.Driver");
-	//		Connection con = 
-	//				DriverManager.getConnection("jdbc:mysql://localhost:3306/sqlDB", "root","1234");
-	//		
-	//		//=============================================		
-	//		String sql = "insert into listTBL values(null,'";
-	//		sql = sql + sID + "','" + sISBN + "', curDate())";
-	//		Statement stmt = con.createStatement();
-	//		System.out.println(sql);
-	//		
-	//		stmt.executeUpdate(sql);
-	//		
-	//		//==============================================
-	//		con.close();
-	//	} catch (ClassNotFoundException e1) {
-	//		System.out.println("JDBC 드라이버 로드 에러");
-	//	} catch (SQLException e1) {
-	//		e1.printStackTrace();
-	//	} 
-	//}
+	/*protected void insertList(String sID, String sISBN) {
+		// TODO Auto-generated method stub
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = 
+					DriverManager.getConnection("jdbc:mysql://localhost:3306/sqlDB", "root","1234");
+			
+			//=============================================		
+			String sql = "insert into listTBL values(null,'";
+			sql = sql + sID + "','" + sISBN + "', curDate())";
+			Statement stmt = con.createStatement();
+			System.out.println(sql);
+			
+			stmt.executeUpdate(sql);
+			
+			//==============================================
+			con.close();
+		} catch (ClassNotFoundException e1) {
+			System.out.println("JDBC 드라이버 로드 에러");
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} 
+	}*/
 
 	protected void showSearchResult(String sItem, String txtSearch) {
 		// TODO Auto-generated method stub
 		String sql="";
 		int choice=0;
-		if(sItem.equals("강아지 이름")) {
+		if(sItem.equals("강아지이름")) {
 			sql = "select * from dogTBL where name like '%" + txtSearch + "%'";
 			choice=0;
 		}else if(sItem.equals("보호자명")) {
@@ -395,19 +395,19 @@ public class CafeMain extends JDialog {
 		}else if(sItem.equals("견종")) {
 			sql = "select * from dogTBL where class like '%" + txtSearch + "%'";
 			choice=0;
-		}else if(sItem.equals("일반회원명")) {
+		}else if(sItem.equals("일반고객이름")) {
 			sql = "select * from customerTBL where name like '%" + txtSearch + "%'";
 			choice=1;
 		}else if(sItem.equals("전화번호")) {
 			sql = "select * from customerTBL where mobile like '%" + txtSearch + "%'";
 			choice=1;
 		}		
-		if(sItem.equals("견종") || sItem.equals("강아지이름") || sItem.equals("보호자명")) {
-			String columnNames1[] = {"견종","강아지이름","보호자명","몸무게","생일"};		
+		if(sItem.equals("강아지이름") || sItem.equals("보호자명") || sItem.equals("견종")) {
+			String columnNames1[] = {"강아지이름","보호자명","견종","몸무게","생일"};		
 			DefaultTableModel dtm = new DefaultTableModel(columnNames1, 0);
 			table.setModel(dtm);
 		}else {
-			String columnNames2[] = {"일반회원명","전화번호","본인외전화번호","주소"};
+			String columnNames2[] = {"일반고객이름","전화번호","본인외전화번호","주소"};
 			DefaultTableModel dtm = new DefaultTableModel(columnNames2,0);
 			table.setModel(dtm);			
 		}
