@@ -71,7 +71,6 @@ public class Dog extends JPanel {
 		lblDogImage = new JLabel("");
 		lblDogImage.addMouseListener(new MouseAdapter() {
 			
-			private String file;
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -88,8 +87,8 @@ public class Dog extends JPanel {
 							ImageIcon icon = new ImageIcon(file);
 							Image image = icon.getImage();
 							image = image.getScaledInstance(150, 180, Image.SCALE_SMOOTH);
-							ImageIcon dogPic = new ImageIcon(image);
-							lblDogImage.setIcon(dogPic);
+							ImageIcon Pic = new ImageIcon(image);
+							lblDogImage.setIcon(Pic);
 						}
 					}
 				}
